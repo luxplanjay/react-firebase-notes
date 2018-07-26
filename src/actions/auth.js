@@ -17,20 +17,27 @@ const createUserFail = error => ({
   payload: { error },
 });
 
-export const createUser = (email, password) => dispatch => {
+export const createUser = (email, password, name = 'USER_NAME') => dispatch => {
   dispatch(createUserStart());
 
   auth
     .createUserWithEmailAndPassword(email, password)
     .then(user => {
+      console.log(user);
+
+      user
+        .updateProfile({
+          displayName: name,
+        })
+        .catch(error => console.log(error));
+
       const currentUser = {
         id: user.uid,
         email: user.email,
+        name: name,
       };
 
-      usersDbRef
-        .child(currentUser.id)
-        .set(currentUser);
+      usersDbRef.child(currentUser.id).set(currentUser);
 
       dispatch(createUserSuccess());
     })
@@ -82,7 +89,6 @@ export const signOut = () => dispatch => {
   auth.signOut().catch(error => dispatch(signOutFail(error)));
 };
 
-
 /**
  * CREATE AUTH OBSERVER ACTIONS
  */
@@ -93,6 +99,7 @@ export const createAuthObserver = () => (dispatch, getState) =>
         signInSuccess({
           id: user.uid,
           email: user.email,
+          name: user.displayName,
         }),
       );
     } else {

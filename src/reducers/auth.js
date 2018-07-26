@@ -8,6 +8,7 @@ function userReducer(state = { id: null, email: null }, { type, payload }) {
         ...state,
         id: payload.user.id,
         email: payload.user.email,
+        name: payload.user.name,
       };
 
     case types.SIGN_OUT_SUCCESS:

@@ -8,9 +8,9 @@ import LogoutPage from '../pages/LogoutPage';
 import AppBar from './AppBar';
 
 class App extends Component {
-  componentWillMount() {
-    this.props.onCreateAuthObserver();
-  }
+  // componentDidMount() {
+  //   this.props.onCreateAuthObserver();
+  // }
 
   render() {
     const { isAuthenticated } = this.props;

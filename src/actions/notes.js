@@ -46,6 +46,7 @@ export const addNote = note => dispatch => {
     .catch(err => dispatch(addNoteFail(err)));
 };
 
+
 /**
  * DELETE NOTE ACTIONS
  */
